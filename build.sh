@@ -1,22 +1,27 @@
 #!/bin/bash
 
-# Lint
-if command -v clang-format &> /dev/null
-then
-	clang-format -i main.c
+ARGS=$#
+DAY="$1"
+
+if [ $ARGS -ne 1 ]; then
+		echo "error: missing/too many arguments"
+		exit 1
 fi
 
-# Cleanup
-rm -f ./main
+if [ ! -d "$DAY" ]; then
+		echo "error: directory $DAY does not exist"
+		echo "usage: ./build.sh <day>"
+		exit 1
+fi
 
-# Linux(debug)
-cc -std=c99 -DDEBUG -Wall -Wno-unknown-pragmas -Wpedantic -Wshadow -Wuninitialized -Wextra -Werror=implicit-int -Werror=incompatible-pointer-types -Werror=int-conversion -Wvla -Og -fsanitize=address -fsanitize=undefined main.c -o main
+echo "building $DAY"
 
-# Linux(fast)
-# cc main.c -std=c89 -Os -DNDEBUG -g0 -s -Wall -Wno-unknown-pragmas -o main
+if make -C "$DAY"/; then
+		echo "success"
+else
+		echo "error: build failed"
+		exit 1
+fi
 
-# Run
-./main
-
-# Cleanup
-rm -f ./main
+./"$DAY"/a.out < "$DAY"/input
+rm "$DAY"/a.out
