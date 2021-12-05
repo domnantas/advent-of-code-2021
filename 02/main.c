@@ -2,10 +2,10 @@
 #include <string.h>
 
 #define COMMAND_COUNT 1000
-#define MAX_DIRECTION_LENGHT 10
+#define MAX_DIRECTION_LENGTH 10
 
 struct Command {
-	char direction[MAX_DIRECTION_LENGHT];
+	char direction[MAX_DIRECTION_LENGTH];
 	int value;
 };
 
@@ -53,7 +53,7 @@ main()
 {
 	struct Command commands[COMMAND_COUNT];
 
-	char direction[MAX_DIRECTION_LENGHT];
+	char direction[MAX_DIRECTION_LENGTH];
 	int value;
 	int command_index = 0;
 	while(fscanf(stdin, "%s %d", direction, &value) == 2) {
