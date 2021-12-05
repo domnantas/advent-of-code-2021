@@ -1,21 +1,49 @@
 #include <stdio.h>
+#include <string.h>
 
-#define DEPTH_MEASUREMENT_COUNT 2000
+#define COMMAND_COUNT 6
+#define MAX_DIRECTION_LENGHT 10
+
+struct Command {
+	char direction[MAX_DIRECTION_LENGHT];
+	int value;
+};
+
+int
+calculate_total_distance(struct Command commands[])
+{
+	int horizontal_distance = 0;
+	int vertical_distance = 0;
+	for(int index = 0; index < COMMAND_COUNT; index++) {
+		struct Command command = commands[index];
+		if(strcmp(command.direction, "forward") == 0) {
+			horizontal_distance += command.value;
+		} else if(strcmp(command.direction, "down") == 0)
+			vertical_distance += command.value;
+		else
+			vertical_distance -= command.value;
+	}
+
+	return horizontal_distance * vertical_distance;
+}
 
 int
 main()
 {
-	int depth_measurements[DEPTH_MEASUREMENT_COUNT];
-	int depth_measurement_index = 0;
-	while(fscanf(stdin, "%d", &depth_measurements[depth_measurement_index++]) == 1)
-		;
-	int increased_depth_count = count_increased_values(depth_measurements);
+	struct Command commands[COMMAND_COUNT];
 
-	printf("part 1: depth increased %d times\n", increased_depth_count);
+	char direction[MAX_DIRECTION_LENGHT];
+	int value;
+	int command_index = 0;
+	while(fscanf(stdin, "%s %d", direction, &value) == 2) {
+		strcpy(commands[command_index].direction, direction);
+		commands[command_index].value = value;
+		command_index++;
+	}
 
-	int increased_depth_window_count = count_increased_values_sliding_window(depth_measurements);
+	int total_distance = calculate_total_distance(commands);
 
-	printf("part 2: sliding window depth increased %d times\n", increased_depth_window_count);
+	printf("part 1: total distance traveled: %d\n", total_distance);
 
 	return 0;
 }
