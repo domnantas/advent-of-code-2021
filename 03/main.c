@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define BINARY_COUNT 12
-#define MAX_BINARY_STRING_LENGTH 6
+#define BINARY_COUNT 1000
+#define MAX_BINARY_STRING_LENGTH 13
 #define MAX_BINARY_LENGTH MAX_BINARY_STRING_LENGTH - 1
 
 int
@@ -16,7 +16,7 @@ binary_to_decimal(int *binary)
 }
 
 int
-calculate_power_consumption(char *string_list[])
+calculate_power_consumption(char string_list[][MAX_BINARY_STRING_LENGTH])
 {
 	int gamma[MAX_BINARY_LENGTH] = {0};
 	int epsilon[MAX_BINARY_LENGTH] = {0};

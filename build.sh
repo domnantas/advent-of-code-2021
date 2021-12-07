@@ -23,5 +23,5 @@ else
 		exit 1
 fi
 
-./"$DAY"/a.out < "$DAY"/input_test
+./"$DAY"/a.out < "$DAY"/input
 rm "$DAY"/a.out
